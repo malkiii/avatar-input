@@ -1,17 +1,28 @@
 {
-  "name": "react-image-form-input",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo run build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "test": "turbo run test --force",
+    "cli:build": "turbo --filter=react-image-form-input build",
+    "cli:start": "pnpm --filter=react-image-form-input start",
+    "typecheck": "turbo run typecheck",
+    "format:write": "turbo run format:write",
+    "format:check": "turbo run format:check",
+    "publish": "cd packages/cli && pnpm publish"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
     "turbo": "latest"
+  },
+  "prettier": {
+    "semi": true,
+    "tabWidth": 2,
+    "printWidth": 100,
+    "trailingComma": "all"
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {

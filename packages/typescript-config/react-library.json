@@ -3,6 +3,10 @@
   "display": "React Library",
   "extends": "./base.json",
   "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "jsx": "react-jsx"
   }
 }
