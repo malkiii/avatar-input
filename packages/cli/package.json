@@ -1,5 +1,6 @@
 {
   "name": "react-image-form-input",
+  "description": "A simple unstyled input component to select avatars and crop images.",
   "version": "0.0.1",
   "type": "module",
   "author": {
