@@ -1,4 +1,6 @@
-import ImageInput from '~/components/ui/image-input';
+'use client';
+
+import ImageInput from '~/components/image-input';
 
 export default function Page() {
   return (

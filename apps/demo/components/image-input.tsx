@@ -1,17 +1,23 @@
-'use client';
-
-import { useCallback, useMemo, useRef, useState } from 'react';
+import React from 'react';
 import { useScrollPosition, useSwiping } from 'react-pre-hooks';
 
+// input component
 export default function ImageInput() {
-  const [imageFile, setImageFile] = useState<File>();
-  const [croppedImage, setCroppedImage] = useState<string>();
+  const [imageFile, setImageFile] = React.useState<File>();
+  const [croppedImage, setCroppedImage] = React.useState<string>();
 
+  // aspect ratio of the cropped image
   const aspectRatio = '1/1';
 
   return (
     <div style={{ width: '100%', maxWidth: '320px' }}>
-      <div style={{ width: '100%', border: '1px solid gray', aspectRatio }}>
+      <div
+        style={{
+          width: '100%',
+          border: '1px solid gray',
+          aspectRatio,
+        }}
+      >
         {croppedImage && <img src={croppedImage} width="100%" alt="Cropped image" />}
       </div>
       <button style={{ display: 'block', width: '100%', marginTop: '0.5rem' }}>
@@ -37,19 +43,21 @@ type ImageCropperProps = {
   onCrop: (image: string) => any;
 };
 
+// cropper component
 function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
-  const { containerRef, maskRef, ...rect } = useImageCropper();
+  const { containerRef, maskRef, ...cropper } = useImageCropper();
 
-  const imageSrc = useMemo(() => image && URL.createObjectURL(image), [image]);
-  const imageSize = 100 * rect.zoom + '%';
-
-  const handleCrop = () => {
-    const croppedImage = rect.crop();
-    if (croppedImage) onCrop(croppedImage);
-  };
+  const imageSrc = React.useMemo(() => image && URL.createObjectURL(image), [image]);
 
   return (
-    <dialog style={{ padding: '1rem', margin: 'auto', width: '100%', maxWidth: '420px' }}>
+    <dialog
+      style={{
+        padding: '1rem',
+        margin: 'auto',
+        width: '100%',
+        maxWidth: '420px',
+      }}
+    >
       <div
         ref={containerRef}
         style={{
@@ -75,21 +83,12 @@ function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
           {image && (
             <img
               src={imageSrc}
-              style={{
-                position: 'absolute',
-                width: imageSize,
-                height: imageSize,
-                objectFit: 'cover',
-                overflow: 'visible',
-                objectPosition: '0 0',
-                top: `${-rect.scroll.y}px`,
-                left: `${-rect.scroll.x}px`,
-              }}
-              onLoad={({ currentTarget }) => {
-                currentTarget.closest('dialog')?.showModal();
-                rect.setImageSize({
-                  width: currentTarget.naturalWidth,
-                  height: currentTarget.naturalHeight,
+              style={cropper.styles.image}
+              onLoad={(e) => {
+                e.currentTarget.closest('dialog')?.showModal();
+                cropper.setImageSize({
+                  width: e.currentTarget.naturalWidth,
+                  height: e.currentTarget.naturalHeight,
                 });
               }}
             />
@@ -106,12 +105,7 @@ function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
               height: '100%',
             }}
           >
-            <div
-              style={{
-                [rect.isPortrait ? 'width' : 'height']: imageSize,
-                aspectRatio: `${rect.width}/${rect.height}`,
-              }}
-            ></div>
+            <div style={cropper.styles.maskContent}></div>
           </div>
         </div>
       </div>
@@ -120,27 +114,32 @@ function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
         min={1}
         max={5}
         step={1}
-        value={rect.zoom}
-        onChange={(e) => rect.setZoom(+e.target.value)}
+        value={cropper.zoom}
+        onChange={(e) => cropper.setZoom(+e.target.value)}
         style={{ width: '100%', marginBottom: '1rem' }}
       />
-      <button style={{ display: 'block', width: '100%' }} onClick={handleCrop}>
+      <button
+        style={{ display: 'block', width: '100%' }}
+        onClick={(e) => {
+          const croppedImage = cropper.crop();
+          if (croppedImage) onCrop(croppedImage);
+          e.currentTarget.closest('dialog')?.close();
+        }}
+      >
         Crop
       </button>
     </dialog>
   );
 }
 
-// all the cropper functionalities
+// all the cropper functionalities and content styles
 function useImageCropper() {
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
-  const [zoom, setZoom] = useState(1);
-
-  const isPortrait = imageSize.height > imageSize.width;
+  const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
+  const [zoom, setZoom] = React.useState(1);
 
   const { ref: maskRef, ...scrollPosition } = useScrollPosition();
 
-  const startPosition = useRef({ top: 0, left: 0 });
+  const startPosition = React.useRef({ top: 0, left: 0 });
   const containerRef = useSwiping<HTMLDivElement>((action) => {
     const container = maskRef.current!;
 
@@ -155,7 +154,7 @@ function useImageCropper() {
     });
   });
 
-  const crop = useCallback(() => {
+  const crop = React.useCallback(() => {
     const image = containerRef.current?.querySelector('img');
     const mask = maskRef.current;
     if (!image || !mask) return;
@@ -176,21 +175,37 @@ function useImageCropper() {
     const ctx = canvas.getContext('2d')!;
     ctx.drawImage(image, sx, sy, maskWidth, maskHeight, 0, 0, canvas.width, canvas.height);
 
-    image.closest('dialog')?.close();
-
     return canvas.toDataURL();
   }, []);
+
+  const styles = React.useMemo(() => {
+    const size = 100 * zoom + '%';
+    const isPortrait = imageSize.height > imageSize.width;
+    return {
+      image: {
+        position: 'absolute',
+        width: size,
+        height: size,
+        objectFit: 'cover',
+        overflow: 'visible',
+        objectPosition: '0 0',
+        top: `${-scrollPosition.y}px`,
+        left: `${-scrollPosition.x}px`,
+      } satisfies React.CSSProperties,
+      maskContent: {
+        [isPortrait ? 'width' : 'height']: size,
+        aspectRatio: `${imageSize.width}/${imageSize.height}`,
+      },
+    };
+  }, [imageSize, scrollPosition, zoom]);
 
   return {
     containerRef,
     maskRef,
-    width: imageSize.width,
-    height: imageSize.height,
-    scroll: scrollPosition,
-    isPortrait,
+    styles,
+    zoom,
     setImageSize,
     setZoom,
-    zoom,
     crop,
   };
 }
