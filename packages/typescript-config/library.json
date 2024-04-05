@@ -4,9 +4,9 @@
   "extends": "./base.json",
   "compilerOptions": {
     "strict": true,
-    "declaration": true,
-    "esModuleInterop": true,
+    "allowJs": true,
     "skipLibCheck": true,
-    "jsx": "react-jsx"
+    "isolatedModules": true,
+    "esModuleInterop": true
   }
 }

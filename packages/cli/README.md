@@ -1,3 +1,3 @@
 # react-image-form-input
 
-a simple unstyled input component to select avatars and crop images.
+add a simple unstyled input component to select avatars and crop images using a CLI.
