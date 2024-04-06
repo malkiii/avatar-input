@@ -10,7 +10,6 @@
     "incremental": false,
     "isolatedModules": true,
     "noUncheckedIndexedAccess": true,
-    "resolveJsonModule": true,
     "skipLibCheck": true
   }
 }
