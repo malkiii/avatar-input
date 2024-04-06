@@ -2,7 +2,7 @@
 
 add a simple unstyled input component to select avatars and crop images using a CLI.
 
-## Usage
+## Setup
 
 Run the `react-image-form-input` command to setup the component in your project:
 
@@ -21,3 +21,7 @@ use the `-p` or `--path` option to use a specific path to add the component to:
 ```sh
 npx react-image-form-input@latest --path=/components
 ```
+
+## Demo
+
+See the component demo [here](https://malkiii.github.io/react-image-form-input).
