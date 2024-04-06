@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    paths: ['packages/cli/**']
+    paths: ['packages/cli/src/**', 'packages/cli/tests/**']
   pull_request:
     types: [opened, reopened]
 
