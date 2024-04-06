@@ -7,9 +7,6 @@
     "name": "Malki Abderrahmane",
     "url": "https://malki.me"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "exports": "./dist/index.js",
   "bin": "./dist/index.js",
   "license": "MIT",
@@ -25,11 +22,10 @@
   "scripts": {
     "build": "rm -rf ./dist && tsc",
     "start": "node dist/index.js",
-    "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0",
+    "lint": "tsc --noEmit && eslint . --max-warnings 0",
     "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
+    "test": "vitest run",
     "publish": "pnpm build && pnpm publish --access public"
   },
   "dependencies": {

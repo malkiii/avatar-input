@@ -5,7 +5,6 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo run test --force",
-    "typecheck": "turbo run typecheck",
     "cli:build": "cd packages/cli && pnpm build",
     "cli:start": "cd packages/cli && pnpm start",
     "format:write": "turbo run format:write",
