@@ -35,6 +35,8 @@ async function main() {
       const componentContent = await getComponentFileContent(pkg.repository, project.isTsProject);
       const contentPrefix = project.isUsingRSC ? "'use client';\n\n" : '';
 
+      fs.mkdirSync(path.resolve(directory, project.componentsDir), { recursive: true });
+
       fs.writeFileSync(
         path.resolve(directory, project.componentsDir, componentName),
         contentPrefix + componentContent,
