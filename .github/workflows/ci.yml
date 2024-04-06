@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['packages/cli/**']
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Running Tests
+        run: pnpm lint && pnpm test
+
+      - name: Building
+        run: pnpm cli:build
