@@ -5,9 +5,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo run test --force",
-    "cli:build": "turbo --filter=react-image-form-input build",
-    "cli:start": "pnpm --filter=react-image-form-input start",
     "typecheck": "turbo run typecheck",
+    "cli:build": "cd packages/cli && pnpm build",
+    "cli:start": "cd packages/cli && pnpm start",
     "format:write": "turbo run format:write",
     "format:check": "turbo run format:check",
     "publish": "cd packages/cli && pnpm publish"
