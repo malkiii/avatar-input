@@ -24,8 +24,25 @@ async function main() {
     .action(async (directory, options) => {
       validateProjectDirectory(directory);
 
+      const spinner = ora('Cloning the component...').start();
+
       const project = getProjectInfo(directory, options.path);
-      const componentContent = await getComponentFileContent(pkg.repository);
+
+      const componentName = `ImageInput.${project.isTsProject ? 'tsx' : 'jsx'}`;
+      const componentContent = await getComponentFileContent(pkg.repository, project.isTsProject);
+      const contentPrefix = project.isUsingRSC ? "'use client';\n\n" : '';
+
+      fs.writeFileSync(
+        path.resolve(directory, project.componentsDir, componentName),
+        contentPrefix + componentContent,
+      );
+
+      spinner.start('Installing dependencies...');
+
+      await installDependencies(directory);
+
+      spinner.stop();
+      log.success('Done.');
     });
 
   program.parse();
@@ -48,7 +65,7 @@ function validateProjectDirectory(cwd: string) {
   }
 }
 
-function getPackageInfo() {
+export function getPackageInfo() {
   const dirname = path.dirname(fileURLToPath(import.meta.url));
   const pkg = JSON.parse(fs.readFileSync(path.join(dirname, 'package.json'), 'utf-8'));
 
@@ -60,7 +77,7 @@ function getPackageInfo() {
   } satisfies PackageJson;
 }
 
-async function getComponentFileContent(repository: string) {
+export async function getComponentFileContent(repository: string, isTsx: boolean) {
   const baseUrl = 'https://raw.githubusercontent.com';
   const componentPath = 'apps/demo/components/image-input.tsx';
   const branch = 'main';
@@ -69,25 +86,26 @@ async function getComponentFileContent(repository: string) {
     const response = await fetch(new URL(`${repository}/${branch}/${componentPath}`, baseUrl));
     const fileContent = await response.text();
 
-    return fileContent;
+    return isTsx ? fileContent : convertToJs(fileContent);
   } catch (error) {
     log.error('Failed to fetch component file:', error);
     process.exit(1);
   }
 }
 
-function getProjectInfo(cwd: string, componentsPath?: string) {
+export function getProjectInfo(cwd: string, componentsPath?: string) {
   const srcDir = fs.existsSync(path.resolve(cwd, 'src')) ? 'src/' : '';
+
+  const isNextProject = fs.readdirSync(cwd).some((file) => file.startsWith('next.config.'));
 
   return {
     isTsProject: fs.existsSync(path.resolve(cwd, 'tsconfig.json')),
-    isNextProject: fs.readdirSync(cwd).some((file) => file.startsWith('next.config.')),
-    isUsingAppDir: fs.existsSync(path.resolve(cwd, `${srcDir}app`)),
+    isUsingRSC: isNextProject && fs.existsSync(path.resolve(cwd, `${srcDir}app`)),
     componentsDir: componentsPath ?? `${srcDir}components/ui`,
   };
 }
 
-function getPackageManager(cwd: string) {
+export function getPackageManager(cwd: string) {
   const packageManagers = ['npm', 'yarn', 'pnpm', 'bun'] as const;
 
   const lockFiles = {
@@ -100,7 +118,7 @@ function getPackageManager(cwd: string) {
   return packageManagers.find((pm) => fs.existsSync(lockFiles[pm])) ?? 'npm';
 }
 
-function convertToJs(tsCode: string) {
+export function convertToJs(tsCode: string) {
   try {
     const result = babel.transformSync(tsCode, {
       plugins: [
