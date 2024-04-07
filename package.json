@@ -9,7 +9,7 @@
     "cli:start": "cd packages/cli && pnpm start",
     "format:write": "turbo run format:write",
     "format:check": "turbo run format:check",
-    "publish": "cd packages/cli && pnpm publish"
+    "release": "cd packages/cli && pnpm publish"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
