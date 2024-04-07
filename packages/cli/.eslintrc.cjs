@@ -9,6 +9,7 @@ module.exports = {
   },
   rules: {
     'no-undef': 'off',
+    'no-redeclare': 'off',
     'no-unused-vars': 'off',
     '@next/next/no-img-element': 'off',
   },
