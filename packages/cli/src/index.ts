@@ -11,7 +11,7 @@ import {
   getPackageManager,
   getComponentFileContent,
   log,
-} from './utils';
+} from './helpers';
 
 process.on('SIGINT', () => process.exit(0));
 process.on('SIGTERM', () => process.exit(0));

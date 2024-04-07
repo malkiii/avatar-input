@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "dist",
     "sourceMap": true,
-    "isolatedModules": false,
+    "declaration": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },

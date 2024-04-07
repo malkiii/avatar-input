@@ -9,7 +9,7 @@ import {
   getProjectInfo,
   getPackageManager,
   getComponentFileContent,
-} from '../src/utils';
+} from '../src/helpers';
 
 const rootDir = path.resolve(__dirname, '../../../');
 const repo = `/malkiii/${pkg.name}`;

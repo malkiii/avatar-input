@@ -6,7 +6,7 @@ import { type PackageJson } from 'type-fest';
 import transformTypescript from '@babel/plugin-transform-typescript';
 import babel from '@babel/core';
 
-const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../');
+const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../');
 export const componentPath = 'apps/demo/components/image-input.tsx';
 
 export function getPackageInfo() {
