@@ -2,6 +2,8 @@
 
 add a simple unstyled input component to select avatars and crop images using a CLI.
 
+> See the component [demo](https://malkiii.github.io/avatar-input).
+
 ## Setup
 
 Run the `avatar-input` command to setup the component in your project:
@@ -10,18 +12,14 @@ Run the `avatar-input` command to setup the component in your project:
 npx avatar-input
 ```
 
-you can specify your app folder:
+You can specify your app folder:
 
 ```bash
 npx avatar-input ./your-app
 ```
 
-use the `-p` or `--path` option to use a specific path to add the component to:
+Use the `-p` or `--path` option to use a specific path to add the component to:
 
 ```sh
 npx avatar-input --path=/components
 ```
-
-## Demo
-
-See the component demo [here](https://malkiii.github.io/avatar-input).

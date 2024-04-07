@@ -1,7 +1,7 @@
 {
   "name": "avatar-input",
   "description": "CLI to add a simple unstyled input component to select avatars and crop images using.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "author": {
     "name": "Malki Abderrahmane",
@@ -29,10 +29,12 @@
     "release": "pnpm test && pnpm build && pnpm publish --access public"
   },
   "dependencies": {
+    "@antfu/ni": "^0.21.12",
     "@babel/core": "^7.24.4",
     "@babel/plugin-transform-typescript": "^7.24.4",
     "commander": "^12.0.0",
     "execa": "^8.0.1",
+    "node-fetch": "^3.3.2",
     "ora": "^8.0.1"
   },
   "devDependencies": {

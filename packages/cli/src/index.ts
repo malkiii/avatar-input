@@ -72,7 +72,7 @@ function validateProjectDirectory(cwd: string) {
 }
 
 async function installDependencies(cwd: string) {
-  const pm = getPackageManager(cwd);
+  const pm = await getPackageManager(cwd);
 
   const dependencies = ['react-pre-hooks'];
 

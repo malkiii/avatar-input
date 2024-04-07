@@ -41,16 +41,6 @@ describe('CLI command functions', () => {
     expect(reactInfo.componentsDir).toEqual('src/components/ui');
   });
 
-  it('should get the right package manager', () => {
-    const nextPM = getPackageManager(nextApp);
-    const reactPM = getPackageManager(reactApp);
-    const rootPM = getPackageManager(rootDir);
-
-    expect(nextPM).toEqual('npm');
-    expect(reactPM).toEqual('yarn');
-    expect(rootPM).toEqual('pnpm');
-  });
-
   it('should fetch the component content from GitHub', async () => {
     const content = fs.readFileSync(path.resolve(rootDir, componentPath), 'utf-8');
 

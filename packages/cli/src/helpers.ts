@@ -1,7 +1,9 @@
 import fs from 'fs';
 import path from 'path';
+import fetch from 'node-fetch';
 import { fileURLToPath } from 'url';
 import { type PackageJson } from 'type-fest';
+import { detect } from '@antfu/ni';
 // @ts-ignore
 import transformTypescript from '@babel/plugin-transform-typescript';
 import babel from '@babel/core';
@@ -47,17 +49,19 @@ export function getProjectInfo(cwd: string, componentsPath?: string) {
   };
 }
 
-export function getPackageManager(cwd: string) {
-  const packageManagers = ['npm', 'yarn', 'pnpm', 'bun'] as const;
+export async function getPackageManager(cwd: string) {
+  const packageManager = await detect({ programmatic: true, cwd });
 
-  const lockFiles = {
-    npm: path.resolve(cwd, 'package-lock.json'),
-    yarn: path.resolve(cwd, 'yarn.lock'),
-    pnpm: path.resolve(cwd, 'pnpm-lock.yaml'),
-    bun: path.resolve(cwd, 'bun.lock'),
-  };
-
-  return packageManagers.find((pm) => fs.existsSync(lockFiles[pm])) ?? 'npm';
+  switch (packageManager) {
+    case 'yarn@berry':
+      return 'yarn';
+    case 'pnpm@6':
+      return 'pnpm';
+    case 'bun':
+      return 'bun';
+    default:
+      return packageManager ?? 'npm';
+  }
 }
 
 export function convertToJs(tsCode: string) {
@@ -87,12 +91,12 @@ export function convertToJs(tsCode: string) {
 
 export const log = {
   error(...args: unknown[]) {
-    console.log('❌ ERROR:', ...args);
+    console.log('\n❌ ERROR:', ...args);
   },
   warn(...args: unknown[]) {
-    console.log('⚠️ WARNING:', ...args);
+    console.log('\n⚠️ WARNING:', ...args);
   },
   success(...args: unknown[]) {
-    console.log('✅ SUCCESS:', ...args);
+    console.log('\n✅ SUCCESS:', ...args);
   },
 };
