@@ -1,5 +1,5 @@
 {
-  "name": "react-image-form-input",
+  "name": "avatar-input",
   "description": "CLI to add a simple unstyled input component to select avatars and crop images using.",
   "version": "0.0.1",
   "type": "module",
@@ -10,18 +10,18 @@
   "exports": "./dist/index.js",
   "bin": "./dist/index.js",
   "license": "MIT",
-  "homepage": "https://malkiii.github.io/react-image-form-input",
+  "homepage": "https://malkiii.github.io/avatar-input",
   "files": [
     "dist/"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/malkiii/react-image-form-input",
+    "url": "https://github.com/malkiii/avatar-input",
     "directory": "packages/cli"
   },
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
     "start": "node dist/index.js",
+    "build": "tsup ./src/index.ts --target esnext --format esm --sourcemap --clean",
     "lint": "tsc --noEmit && eslint . --max-warnings 0",
     "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
@@ -39,6 +39,7 @@
     "@repo/typescript-config": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "@types/node": "^20.11.24",
+    "tsup": "^8.0.2",
     "type-fest": "^4.15.0",
     "typescript": "^5.3.3",
     "vite-tsconfig-paths": "^4.3.2",

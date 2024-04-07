@@ -1,7 +1,11 @@
 {
   "extends": "@repo/typescript-config/library.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "sourceMap": true,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

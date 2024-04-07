@@ -5,9 +5,11 @@
   "compilerOptions": {
     "strict": true,
     "allowJs": true,
+    "composite": false,
     "skipLibCheck": true,
-    "isolatedModules": true,
+    "inlineSources": false,
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "module": "ESNext"
   }
 }
