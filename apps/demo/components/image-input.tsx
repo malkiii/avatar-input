@@ -13,7 +13,7 @@ export default function ImageInput() {
     <div style={{ width: '100%', maxWidth: '320px' }}>
       <div
         style={{
-          width: '100%',
+          minHeight: '100%',
           border: '1px solid gray',
           aspectRatio,
         }}
