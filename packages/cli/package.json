@@ -26,7 +26,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
     "test": "vitest run",
-    "publish": "pnpm test && pnpm build && pnpm publish --access public"
+    "release": "pnpm test && pnpm build && pnpm publish --access public"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
