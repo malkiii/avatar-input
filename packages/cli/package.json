@@ -1,7 +1,7 @@
 {
   "name": "avatar-input",
   "description": "CLI to add a simple unstyled input component to select avatars and crop images using.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "author": {
     "name": "Malki Abderrahmane",

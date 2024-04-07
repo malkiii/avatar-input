@@ -23,29 +23,29 @@ async function main() {
     .name(pkg.name)
     .version(pkg.version)
     .description(pkg.description)
-    .argument('<directory>', 'the directory to add the component to', process.cwd())
+    .argument('[dir]', 'the directory to add the component to', process.cwd())
     .option('-p, --path <path>', 'the path to add the component to.')
-    .action(async (directory, options) => {
-      validateProjectDirectory(directory);
+    .action(async (dir, options) => {
+      validateProjectDirectory(dir);
 
       const spinner = ora('Cloning the component...').start();
 
-      const project = getProjectInfo(directory, options.path);
+      const project = getProjectInfo(dir, options.path);
 
       const componentName = `ImageInput.${project.isTsProject ? 'tsx' : 'jsx'}`;
       const componentContent = await getComponentFileContent(pkg.repository, project.isTsProject);
       const contentPrefix = project.isUsingRSC ? "'use client';\n\n" : '';
 
-      fs.mkdirSync(path.resolve(directory, project.componentsDir), { recursive: true });
+      fs.mkdirSync(path.resolve(dir, project.componentsDir), { recursive: true });
 
       fs.writeFileSync(
-        path.resolve(directory, project.componentsDir, componentName),
+        path.resolve(dir, project.componentsDir, componentName),
         contentPrefix + componentContent,
       );
 
       spinner.start('Installing dependencies...');
 
-      await installDependencies(directory);
+      await installDependencies(dir);
 
       spinner.stop();
       log.success('Done.');
