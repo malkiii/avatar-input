@@ -6,4 +6,5 @@ export const site = {
   author: 'Malki Abderrahmane',
   icon: 'https://react.dev/favicon.ico',
   url: pkg.homepage,
+  github: pkg.repository.url,
 } as const;
