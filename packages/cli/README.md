@@ -18,8 +18,12 @@ You can specify your app folder:
 npx avatar-input ./your-app
 ```
 
-Use the `-p` or `--path` option to use a specific path to add the component to:
+By default, you will find it in your project component file like `/component/ui`, you can use the `-p` or `--path` option to use a specific path to add the component to:
 
 ```sh
 npx avatar-input --path=/components
 ```
+
+## License
+
+Distributed under the [MIT license](https://github.com/malkiii/avatar-input/blob/main/LICENSE).
