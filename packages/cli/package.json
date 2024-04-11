@@ -7,8 +7,8 @@
     "name": "Malki Abderrahmane",
     "url": "https://malki.me"
   },
-  "exports": "./dist/index.js",
   "bin": "./dist/index.js",
+  "exports": "./dist/index.js",
   "license": "MIT",
   "homepage": "https://malkiii.github.io/avatar-input",
   "files": [
@@ -26,7 +26,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache",
     "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache",
     "test": "vitest run",
-    "release": "pnpm test && pnpm build && pnpm publish --access public"
+    "release": "pnpm test && pnpm build && pnpm publish --provenance --access public"
   },
   "dependencies": {
     "@antfu/ni": "^0.21.12",
