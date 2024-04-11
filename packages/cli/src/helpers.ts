@@ -97,6 +97,6 @@ export const log = {
     console.log('\n⚠️ WARNING:', ...args);
   },
   success(...args: unknown[]) {
-    console.log('\n✅ SUCCESS:', ...args);
+    console.log('\n✅ ', ...args);
   },
 };

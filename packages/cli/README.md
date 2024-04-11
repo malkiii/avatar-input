@@ -21,7 +21,7 @@ npx avatar-input ./your-app
 By default, you will find it in your project component file like `/component/ui`, you can use the `-p` or `--path` option to use a specific path to add the component to:
 
 ```sh
-npx avatar-input --path=/components
+npx avatar-input --path=app/components
 ```
 
 ## License
