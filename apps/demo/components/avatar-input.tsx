@@ -2,7 +2,7 @@ import React from 'react';
 import { useScrollPosition, useSwiping } from 'react-pre-hooks';
 
 // input component
-export default function ImageInput() {
+export default function AvatarInput() {
   const [imageFile, setImageFile] = React.useState<File>();
   const [croppedImage, setCroppedImage] = React.useState<string>();
 

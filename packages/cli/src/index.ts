@@ -32,7 +32,7 @@ async function main() {
 
       const project = getProjectInfo(dir, options.path);
 
-      const componentName = `ImageInput.${project.isTsProject ? 'tsx' : 'jsx'}`;
+      const componentName = `avatar-input.${project.isTsProject ? 'tsx' : 'jsx'}`;
       const componentContent = await getComponentFileContent(pkg.repository, project.isTsProject);
       const contentPrefix = project.isUsingRSC ? "'use client';\n\n" : '';
 

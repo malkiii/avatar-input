@@ -1,6 +1,6 @@
 'use client';
 
-import ImageInput from '~/components/image-input';
+import AvatarInput from '~/components/avatar-input';
 import { site } from '~/data/constants';
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
         padding: '0 1rem',
       }}
     >
-      <ImageInput />
+      <AvatarInput />
       <GithubCorner />
     </main>
   );

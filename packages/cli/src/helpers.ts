@@ -9,7 +9,7 @@ import transformTypescript from '@babel/plugin-transform-typescript';
 import babel from '@babel/core';
 
 const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../');
-export const componentPath = 'apps/demo/components/image-input.tsx';
+export const componentPath = 'apps/demo/components/avatar-input.tsx';
 
 export function getPackageInfo() {
   const pkg = JSON.parse(fs.readFileSync(path.join(rootDir, 'package.json'), 'utf-8'));
