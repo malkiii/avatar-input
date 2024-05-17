@@ -140,18 +140,20 @@ function useImageCropper() {
   const { ref: maskRef, ...scrollPosition } = useScrollPosition();
 
   const startPosition = React.useRef({ top: 0, left: 0 });
-  const containerRef = useSwiping<HTMLDivElement>((action) => {
-    const container = maskRef.current!;
+  const containerRef = useSwiping<HTMLDivElement>({
+    handler: (action) => {
+      const container = maskRef.current!;
 
-    if (action.type === 'start') {
-      startPosition.current.top = container.scrollTop;
-      startPosition.current.left = container.scrollLeft;
-    }
+      if (action.type === 'start') {
+        startPosition.current.top = container.scrollTop;
+        startPosition.current.left = container.scrollLeft;
+      }
 
-    container.scrollTo({
-      top: startPosition.current.top + action.deltaY,
-      left: startPosition.current.left + action.deltaX,
-    });
+      container.scrollTo({
+        top: startPosition.current.top + action.deltaY,
+        left: startPosition.current.left + action.deltaX,
+      });
+    },
   });
 
   const crop = React.useCallback(() => {

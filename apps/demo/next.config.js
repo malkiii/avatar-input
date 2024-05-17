@@ -1,4 +1,4 @@
-const { homepage } = require('../../packages/cli/package.json');
+const { homepage } = require('../../package.json');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

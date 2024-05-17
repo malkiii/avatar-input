@@ -1,5 +1,14 @@
 {
   "private": true,
+  "name": "avatar-input",
+  "description": "a simple unstyled input component to select avatars and crop images using React.js",
+  "author": "Malki Abderrahmane",
+  "license": "MIT",
+  "homepage": "https://malkiii.github.io/avatar-input",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/malkiii/avatar-input"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo dev",
