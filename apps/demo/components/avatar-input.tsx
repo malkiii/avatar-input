@@ -7,7 +7,7 @@ export default function AvatarInput() {
   const [croppedImage, setCroppedImage] = React.useState<string>();
 
   // aspect ratio of the cropped image
-  const aspectRatio = '1/1';
+  const aspectRatio = '1 / 1';
 
   return (
     <div style={{ width: '100%', maxWidth: '320px' }}>
@@ -45,7 +45,8 @@ type ImageCropperProps = {
 
 // cropper component
 function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
-  const { containerRef, maskRef, ...cropper } = useImageCropper(image);
+  const imageSrc = useImageObjectURL(image);
+  const { containerRef, maskRef, ...cropper } = useImageCropper();
 
   return (
     <dialog
@@ -80,7 +81,7 @@ function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
         >
           {image && (
             <img
-              src={cropper.imageSrc}
+              src={imageSrc}
               style={cropper.styles.image}
               onLoad={(e) => {
                 e.currentTarget.closest('dialog')?.showModal();
@@ -130,12 +131,8 @@ function ImageCropper({ image, aspectRatio, onCrop }: ImageCropperProps) {
   );
 }
 
-// all the cropper functionalities and content styles
-function useImageCropper(image: ImageCropperProps['image']) {
-  const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
-  const [zoom, setZoom] = React.useState(1);
-
-  // handle the image source
+// generate image object URL and revoke it when unmounted
+function useImageObjectURL(image: ImageCropperProps['image']) {
   const imageSrc = React.useMemo(() => image && URL.createObjectURL(image), [image]);
 
   React.useEffect(
@@ -145,10 +142,18 @@ function useImageCropper(image: ImageCropperProps['image']) {
     [imageSrc],
   );
 
+  return imageSrc;
+}
+
+// all the cropper functionalities and content styles
+function useImageCropper() {
+  const [imageSize, setImageSize] = React.useState({ width: 0, height: 0 });
+  const [zoom, setZoom] = React.useState(1);
+
+  const startPosition = React.useRef({ top: 0, left: 0 });
   const { ref: maskRef, ...scrollPosition } = useScrollPosition();
 
   // handle image sliding
-  const startPosition = React.useRef({ top: 0, left: 0 });
   const containerRef = useSwiping<HTMLDivElement>({
     handler: (action) => {
       const container = maskRef.current!;
@@ -190,6 +195,7 @@ function useImageCropper(image: ImageCropperProps['image']) {
     return canvas.toDataURL();
   }, []);
 
+  // generate the cropper component styles
   const styles = React.useMemo(() => {
     const size = 100 * zoom + '%';
     const isPortrait = imageSize.height > imageSize.width;
@@ -203,16 +209,15 @@ function useImageCropper(image: ImageCropperProps['image']) {
         objectPosition: '0 0',
         top: `${-scrollPosition.y}px`,
         left: `${-scrollPosition.x}px`,
-      } satisfies React.CSSProperties,
+      },
       maskContent: {
         [isPortrait ? 'width' : 'height']: size,
-        aspectRatio: `${imageSize.width}/${imageSize.height}`,
+        aspectRatio: `${imageSize.width} / ${imageSize.height}`,
       },
-    };
+    } satisfies Record<string, React.CSSProperties>;
   }, [imageSize, scrollPosition, zoom]);
 
   return {
-    imageSrc,
     containerRef,
     maskRef,
     styles,
