@@ -204,6 +204,7 @@ function useImageCropper() {
         position: 'absolute',
         width: size,
         height: size,
+        maxWidth: 'none',
         objectFit: 'cover',
         overflow: 'visible',
         objectPosition: '0 0',
